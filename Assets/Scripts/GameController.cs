@@ -15,9 +15,16 @@ public class GameController : MonoBehaviour {
 	[SerializeField]
 	private float volumen;
 
+	//Creamos variables para el manejo de vidas
+	[SerializeField]
+	private Sprite[] lives;
+	public Image livesImageDisplay;
 	public Text scoreText;
 	//public Text restartText;
 	public Text gameOverText;
+
+	//Vidas que tendra el jugador
+	public int _numLives;
 
 	private bool gameOver;
 	private bool restart;
@@ -48,6 +55,8 @@ public class GameController : MonoBehaviour {
 
 		//Comenzamos la coroutina de los enemigos
 		StartCoroutine(SpawnWaves());
+
+		UpdateLives (_numLives);
 
 	}
 
@@ -111,5 +120,9 @@ public class GameController : MonoBehaviour {
 		source.PlayOneShot (soundGameover,volumen);
 		gameOverText.text = "Game Over!";
 		gameOver = true;
+	}
+
+	public void UpdateLives (int currentLives){
+		livesImageDisplay.sprite = lives [currentLives];
 	}
 }

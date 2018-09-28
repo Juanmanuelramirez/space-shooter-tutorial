@@ -16,6 +16,8 @@ public class DestroyByContact : MonoBehaviour {
 		{
 			//Instanciamos el objeto GameController
 			gameController = gameControllerObject.GetComponent <GameController>();
+
+
 		}
 		if (gameController == null)
 		{
@@ -34,17 +36,22 @@ public class DestroyByContact : MonoBehaviour {
 		{
 			Instantiate(explosion, transform.position, transform.rotation);
 		}
-
+			
 		if (other.tag == "Player")
 		{
-			Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
-			gameController.GameOver ();
+			gameController._numLives--;
+			gameController.UpdateLives (gameController._numLives);
+			if (gameController._numLives == 0) {
+				gameController.GameOver ();
+				Destroy (other.gameObject);
+			}
+			Instantiate (playerExplosion, other.transform.position, other.transform.rotation);
+
 		}
 
 		gameController.AddScore (scoreValue);
 
 		Destroy (this.gameObject);
-		Destroy (other.gameObject);
+
 	}
-	
 }
